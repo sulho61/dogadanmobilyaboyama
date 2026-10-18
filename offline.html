@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f5f7">
+  <script>try{if(localStorage.getItem("theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+  <title>Bağlantı yok | Doğadan Mobilya Boyama</title>
+  <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+  <style>
+    :root { --bg:#f5f5f7; --surface:#fff; --ink:#1d1d1f; --muted:#6e6e73; --line:#e5e5ea; }
+    :root[data-theme="dark"] { color-scheme: dark; --bg:#111113; --surface:#1c1c1e; --ink:#f5f5f7; --muted:#a1a1a6; --line:#38383a; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    main { display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; }
+    .icon {
+      width: 96px; height: 96px;
+      display: grid; place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--muted);
+    }
+    .icon svg { width: 44px; height: 44px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    h1 { margin: 0; font-family: "Playfair Display", Georgia, serif; font-size: 28px; font-weight: 500; letter-spacing: -.5px; }
+    button {
+      min-height: 48px; padding: 0 28px;
+      border: 0; border-radius: 980px;
+      background: var(--ink); color: var(--bg);
+      font: inherit; font-size: 14px; font-weight: 600;
+      cursor: pointer;
+      transition: transform .2s, opacity .2s;
+    }
+    button:hover { transform: translateY(-1px); opacity: .9; }
+    button:focus-visible { outline: 2px solid #0071e3; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/><path d="M10.71 5.05A16 16 0 0 1 22.58 9"/><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+    </div>
+    <h1>Bağlantı yok</h1>
+    <button type="button" id="retry">Yenile</button>
+  </main>
+  <script>
+    document.getElementById("retry").addEventListener("click", () => location.reload());
+    window.addEventListener("online", () => location.reload());
+  </script>
+</body>
+</html>
