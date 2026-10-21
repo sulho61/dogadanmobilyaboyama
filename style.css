@@ -2026,16 +2026,12 @@ body.lightbox-open {
   background: #3a3a3c;
 }
 
-/* Footer: yükle + paylaş butonları */
-.footer-install {
+.footer-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  padding-bottom: 24px;
+  gap: 12px 20px;
 }
-
-/* Footer zemini koyu olduğu için açık renkli buton */
 .site-footer .share-btn {
   background: #f5f5f7;
   color: var(--ink);
@@ -2054,15 +2050,10 @@ body.lightbox-open {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-
 .share-status {
   flex-basis: 100%;
   min-height: 18px;
-  margin: 0;
+  max-width: none !important;
   color: #a1a1a6;
-  font-size: 12px;
-}
-.install-ios {
-  flex-basis: 100%;
   font-size: 12px;
 }
