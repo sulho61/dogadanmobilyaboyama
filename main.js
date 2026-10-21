@@ -781,3 +781,44 @@
     if (isIos && installIos) installIos.hidden = false;
   }
 })();
+
+(function () {
+  var btn = document.getElementById("share-site-btn");
+  var status = document.getElementById("share-status");
+  if (!btn) return;
+
+  function say(msg) {
+    if (!status) return;
+    status.textContent = msg;
+    clearTimeout(say.t);
+    say.t = setTimeout(function () { status.textContent = ""; }, 2500);
+  }
+
+  btn.addEventListener("click", async function () {
+    var url = location.origin + location.pathname; // #bölüm kısmı olmadan
+    var data = {
+      title: "LazVeGaz Mobilya Boyama",
+      text: "Mobilyalarınıza yeni bir hayat veriyoruz. LazVeGaz Mobilya Boyama:",
+      url: url
+    };
+
+    // 1) Sistem paylaş menüsü (mobil)
+    if (navigator.share) {
+      try {
+        await navigator.share(data);
+        return;
+      } catch (e) {
+        if (e && e.name === "AbortError") return; // kullanıcı vazgeçti
+      }
+    }
+
+    // 2) Panoya kopyala
+    try {
+      await navigator.clipboard.writeText(url);
+      say("Bağlantı kopyalandı.");
+    } catch (e) {
+      // 3) Eski tarayıcılar için son çare
+      window.prompt("Bağlantıyı kopyalayın:", url);
+    }
+  });
+})();
