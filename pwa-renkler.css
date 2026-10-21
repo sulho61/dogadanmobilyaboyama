@@ -1,0 +1,310 @@
+/* Doğadan Atölye — ek stiller: "Aşağı keşfet" gizleme, renkler sayfası, PWA yükleme düğmesi */
+
+/* "Aşağı keşfet" kaydırınca gizlenir */
+#scroll-hint {
+  transition: opacity .3s ease, transform .3s ease, visibility .3s;
+}
+#scroll-hint.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+
+/* Renkler sayfası */
+.colors-page-section { padding-top: 24px; background: var(--bg); }
+.page-colors .gallery-page-hero { background: var(--surface); }
+.color-empty {
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+.color-swatch[hidden] { display: none; }
+
+/* PWA yükleme alanı (footer) */
+.footer-install {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.footer-install[hidden],
+.install-btn[hidden],
+.install-ios[hidden] { display: none; }
+.install-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 980px;
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.install-btn:hover { background: rgba(255, 255, 255, .16); transform: translateY(-1px); }
+.install-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.install-ios {
+  margin: 0;
+  max-width: 360px;
+  color: #a1a1a6;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.install-ios strong { color: #fff; }
+
+/* Uygulama (standalone) modunda: iPhone çentik güvenli alanı */
+@media (display-mode: standalone) {
+  body { padding-top: env(safe-area-inset-top, 0px); }
+  .footer-install { display: none; }
+}
+
+/* ─── Lightbox: Paylaş düğmesi + bildirim ─── */
+.lightbox-share {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top, 0px));
+  left: 12px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px 0 14px;
+  border: 0;
+  border-radius: 980px;
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background .15s, transform .15s;
+}
+.lightbox-share:hover { background: rgba(255, 255, 255, .26); }
+.lightbox-share:active { transform: scale(.96); }
+.lightbox-share svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lightbox-toast {
+  position: absolute;
+  top: calc(max(12px, env(safe-area-inset-top, 0px)) + 56px);
+  left: 50%;
+  z-index: 6;
+  padding: 10px 18px;
+  border-radius: 980px;
+  background: rgba(255, 255, 255, .95);
+  color: #1d1d1f;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -6px);
+  transition: opacity .2s, transform .2s;
+}
+.lightbox-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ─── Hızlı arama düğmesi (WhatsApp'ın üstünde) ─── */
+.call-fab {
+  position: fixed;
+  z-index: 1100;
+  right: 18px;
+  bottom: calc(var(--nav-h) + var(--nav-float) + 16px + 60px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 18px 0 14px;
+  border-radius: 980px;
+  background: #1d1d1f;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+  transition: transform .2s, box-shadow .2s;
+}
+.call-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .3);
+}
+.call-fab svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (max-width: 600px) {
+  .call-fab span { display: none; }
+  .call-fab {
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    justify-content: center;
+    right: 14px;
+    bottom: calc(var(--nav-h) + var(--nav-float) + 16px + 52px + 12px);
+  }
+}
+
+/* ─── Tema düğmesi ─── */
+.theme-toggle {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  right: 14px;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .55);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .78);
+  color: #1d1d1f;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .1);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  cursor: pointer;
+  transition: transform .15s, background .2s;
+}
+.theme-toggle:active { transform: scale(.92); }
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.theme-toggle .icon-sun { display: none; }
+
+/* ─── Koyu mod (yalnızca elle açılır; varsayılan beyaz) ─── */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111113;
+  --surface: #1c1c1e;
+  --surface-2: #2c2c2e;
+  --ink: #f5f5f7;
+  --muted: #a1a1a6;
+  --line: #38383a;
+  --line-strong: #48484a;
+  --accent: #f5f5f7;
+  --accent-soft: #d1d1d6;
+  --highlight: #0a84ff;
+  --shadow: 0 8px 30px rgba(0, 0, 0, .45);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, .55);
+}
+:root[data-theme="dark"] .theme-toggle {
+  background: rgba(44, 44, 46, .78);
+  border-color: rgba(255, 255, 255, .12);
+  color: #f5f5f7;
+}
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+
+:root[data-theme="dark"] .skip-link { color: #1d1d1f; }
+
+/* Alt navbar */
+:root[data-theme="dark"] .site-header {
+  background: rgba(44, 44, 46, .78);
+  border-color: rgba(255, 255, 255, .12);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, .5), 0 1px 4px rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255, 255, 255, .08);
+}
+:root[data-theme="dark"] .nav-link.active { background: rgba(255, 255, 255, .12); }
+
+/* "ink" açık renk olduğu için yazısı koyu olması gereken düğmeler */
+:root[data-theme="dark"] .button-primary { color: #1d1d1f; box-shadow: 0 4px 14px rgba(0, 0, 0, .4); }
+:root[data-theme="dark"] .gallery-filter.is-active,
+:root[data-theme="dark"] .gallery-filter:hover,
+:root[data-theme="dark"] .process-tab.is-active,
+:root[data-theme="dark"] .process-tab:hover,
+:root[data-theme="dark"] .color-cat.is-active,
+:root[data-theme="dark"] .color-cat:hover { color: #1d1d1f; }
+
+/* Koyu kalması gereken bantlar */
+:root[data-theme="dark"] .intro-strip,
+:root[data-theme="dark"] .site-footer { background: #000; }
+
+/* Küçük detaylar (fotoğraflar kısılmaz) */
+:root[data-theme="dark"] .gallery-zoom { background: rgba(44, 44, 46, .95); }
+:root[data-theme="dark"] .ba-handle-knob { background: #fff; color: #1d1d1f; }
+:root[data-theme="dark"] .form-row input:focus,
+:root[data-theme="dark"] .form-row textarea:focus,
+:root[data-theme="dark"] .form-row select:focus,
+:root[data-theme="dark"] .color-search:focus { box-shadow: 0 0 0 3px rgba(245, 245, 247, .14); }
+:root[data-theme="dark"] .swatch-chip,
+:root[data-theme="dark"] .color-preview-chip { border-color: rgba(255, 255, 255, .12); }
+:root[data-theme="dark"] .call-fab { background: #f5f5f7; color: #1d1d1f; }
+:root[data-theme="dark"] .lightbox-toast { background: rgba(245, 245, 247, .95); }
+
+/* ─── Renk kataloğu: sayaç + not ─── */
+.color-count { margin: 0; color: var(--muted); font-size: 12px; font-weight: 600; }
+.color-note { margin-top: 20px; }
+.swatch-meta strong { line-height: 1.25; }
+
+/* ─── Galeri: video kartı küçük resmi (ilk kare) ─── */
+.gallery-open video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 4.4;
+  object-fit: cover;
+  pointer-events: none;
+  background: var(--surface-2);
+}
+
+/* ─── hidden özniteliği her zaman gizlesin ───
+   (display: block/flex veren kurallar hidden'ı eziyordu: lightbox'ta boş video oynatıcı görünüyordu) */
+[hidden] { display: none !important; }
+
+/* ─── Lightbox: sürükleme / kaydırma düzeltmeleri ─── */
+.lightbox img,
+.lightbox video,
+.gallery-open img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.lightbox-media img { pointer-events: none; }          /* olaylar sahneye gitsin */
+.lightbox.is-dragging .lightbox-media { transition: none; }  /* sürüklerken gecikme olmasın */
+
+/* Navbar: aktif sayfa vurgusunu her sayfada ve temada tutarlı tut */
+.site-header .nav-link.active,
+.site-header .nav-link[aria-current="page"] {
+  color: var(--ink);
+  background: rgba(29, 29, 31, .08);
+  font-weight: 700;
+}
+.site-header .nav-link.active svg,
+.site-header .nav-link[aria-current="page"] svg { stroke-width: 2.15; }
+:root[data-theme="dark"] .site-header .nav-link.active,
+:root[data-theme="dark"] .site-header .nav-link[aria-current="page"] {
+  color: var(--ink);
+  background: rgba(255, 255, 255, .16);
+}
+
