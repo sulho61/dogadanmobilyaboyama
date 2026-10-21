@@ -1,4 +1,4 @@
-const VERSION = "v8";
+const VERSION = "v9";
 const CACHE = `lazvegaz-${VERSION}`;
 const META = `lazvegaz-meta-${VERSION}`;      // her dosyanın önbelleğe alınma zamanı
 const MAX_AGE = 2 * 24 * 60 * 60 * 1000;      // 2 gün — yalnızca görsel/font gibi dosyalar için
